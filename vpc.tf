@@ -1,3 +1,4 @@
+#### VPC Network isolato
 resource "aws_vpc" "main" {
   cidr_block = "10.3.0.0/16"
   enable_dns_hostnames = true
@@ -6,10 +7,12 @@ resource "aws_vpc" "main" {
   }
 }
 
+### Gateway pubblico per uscire verso internet
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
 }
 
+# subnet assoviate al GW pubblico
 resource "aws_subnet" "management" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.3.1.0/24"
@@ -21,6 +24,7 @@ resource "aws_subnet" "management" {
   }
 }
 
+# Routing table per instradare il traffico verso l'esterno
 resource "aws_route_table" "rtb_public" {
   vpc_id = "${aws_vpc.main.id}"
     route {
@@ -29,11 +33,13 @@ resource "aws_route_table" "rtb_public" {
     }
 }
 
+# associazione della routing table alla subnet di management
 resource "aws_route_table_association" "rta_subnet_public" {
   subnet_id      = "${aws_subnet.management.id}"
   route_table_id = "${aws_route_table.rtb_public.id}"
 }
 
+# aperture per HTTP e HTTPS in ingresso e qualsiasi cosa in uscita
 resource "aws_security_group" "allow_web" {
   name        = "allow_web"
   description = "Allow http and https inbound traffic"
@@ -69,6 +75,7 @@ resource "aws_security_group" "allow_web" {
   }
 }
 
+# aperture per SSH in ingresso
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow ssh connection"
