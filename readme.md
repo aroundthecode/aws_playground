@@ -10,19 +10,19 @@ Project to insert all AWS terrafrom experiment.
 ## Init terraform project
 
 ```
-make make PROJECT=vm_import init   
+make PROJECT=vm_import init
 ```
 
 ## Validate terraform project
 
 ```
-make make PROJECT=vm_import validate   
+make PROJECT=vm_import validate
 ```
 
 ## Terraform project plan
 
 ```
-make make PROJECT=vm_import plan   
+make PROJECT=vm_import plan
 ```
 
 ## Apply terraform project
@@ -30,7 +30,7 @@ make make PROJECT=vm_import plan
 WARNING: no apply confimration will be preompt!
 
 ```
-make make PROJECT=vm_import apply   
+make PROJECT=vm_import apply
 ```
 
 ## Destroy terraform resources
@@ -38,5 +38,5 @@ make make PROJECT=vm_import apply
 WARNING: no deatroy confimration will be preompt!
 
 ```
-make make PROJECT=vm_import destoy   
+make PROJECT=vm_import destoy
 ```
