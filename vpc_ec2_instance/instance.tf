@@ -26,7 +26,8 @@ resource "aws_instance" "web" {
   }
 
   tags = {
-    Name = "HelloWorld"
+    Name = "Test instance"
+    project = "vpc_ec2_instance"
   }
 }
 #### internal IP configuration
@@ -37,6 +38,7 @@ resource "aws_network_interface" "web-ani" {
 
   tags = {
     Name = "primary_network_interface"
+    project = "vpc_ec2_instance"
   }
 }
 #### elastic IP configuration
@@ -55,7 +57,8 @@ resource "aws_ebs_volume" "data" {
   size              = 5
 
   tags = {
-    Name = "HelloWorld"
+    Name = "Additional disk"
+    project = "vpc_ec2_instance"
   }
 }
 

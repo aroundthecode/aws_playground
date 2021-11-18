@@ -21,7 +21,7 @@ Cleaning up:
 * delete AMI snapshot
 * terraform destroy (desltry bucket and role/policy) 
 
-# role creation for vmimport (done once)
+# role creation for vmimport (done once, included in terraform)
 
 ```
 aws iam create-role --role-name vmimport --assume-role-policy-document "file://$(pwd)/trust-policy.json"

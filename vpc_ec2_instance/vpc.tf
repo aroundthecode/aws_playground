@@ -4,6 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   tags = {
     Name = "test-vpc"
+    project = "vpc_ec2_instance"
   }
 }
 
@@ -21,6 +22,7 @@ resource "aws_subnet" "management" {
 
   tags = {
     Name = "manamgement-subnet"
+    project = "vpc_ec2_instance"
   }
 }
 
@@ -72,6 +74,7 @@ resource "aws_security_group" "allow_web" {
 
   tags = {
     Name = "allow_web"
+    project = "vpc_ec2_instance"
   }
 }
 
@@ -91,5 +94,6 @@ resource "aws_security_group" "allow_ssh" {
 
   tags = {
     Name = "allow_ssh"
+    project = "vpc_ec2_instance"
   }
 }
