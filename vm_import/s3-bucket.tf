@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "vmimport" {
-  bucket = "mikesac-vmpimpot"
+  bucket = "mikesac-vmimport"
   acl    = "private"
 
   tags = {
@@ -7,9 +7,6 @@ resource "aws_s3_bucket" "vmimport" {
     project = "vm_import"
   }
 }
-
-
-
 
 resource "aws_iam_role" "vmimport_role" {
   name = "vmimport"

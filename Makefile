@@ -17,10 +17,10 @@ version:
 validate:
 	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} validate ${TERRAFORM_PATH}
 init:
-	${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} init 
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} init 
 plan:
-	${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} plan 
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} plan 
 apply:
-	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} apply -auto-approve ${TERRAFORM_PATH}
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} apply -auto-approve
 destroy:
-	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} destroy -auto-approve ${TERRAFORM_PATH}
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} destroy -auto-approve
