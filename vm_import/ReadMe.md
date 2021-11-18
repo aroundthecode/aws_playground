@@ -2,6 +2,9 @@ procedure main page: https://docs.aws.amazon.com/vm-import/latest/userguide/vmim
 
 compatible OS list: https://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html#vmimport-operating-systems
 
+permission configuration: https://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html#iam-permissions-image
+
+image presign: https://docs.aws.amazon.com/cli/latest/reference/s3/presign.html
 # role creation for vmimport (done once)
 
 ```
