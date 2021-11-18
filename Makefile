@@ -1,20 +1,26 @@
+#current folder
 MYPATH := $(shell pwd)
-TF_VAR_flpath := ${MYPATH}
 
+#import ENV variables
 ifneq (,$(wildcard ./.env))
     include .env
     export
 endif
 
-TERRAFORM_BIN := terraform1011
+#point to your terraform executable path
+TERRAFORM_BIN := /usr/local/bin/terraform1011
+PROJECT := vpc_ec2_instance
+TERRAFORM_PATH := ${MYPATH}/${PROJECT}
 
 version:
 	@${TERRAFORM_BIN} version
 validate:
-	@${TERRAFORM_BIN} validate
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} validate ${TERRAFORM_PATH}
+init:
+	${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} init 
 plan:
-	@${TERRAFORM_BIN} plan
+	${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} plan 
 apply:
-	@${TERRAFORM_BIN} apply -auto-approve 
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} apply -auto-approve ${TERRAFORM_PATH}
 destroy:
-	@${TERRAFORM_BIN} destroy -auto-approve 
+	@${TERRAFORM_BIN} -chdir=${TERRAFORM_PATH} destroy -auto-approve ${TERRAFORM_PATH}
