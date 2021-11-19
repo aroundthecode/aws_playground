@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   tags = {
     Name = "docker-vpc"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 
@@ -13,20 +13,20 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
   tags = {
     Name = "internet_gw"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 
 # subnet assoviate al GW pubblico
 resource "aws_subnet" "management" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.3.1.0/24"
+  cidr_block        = "10.3.2.0/24"
   availability_zone = "${var.aws_region}a"
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "manamgement_subnet"
-    project = "vpc_ec2_instance"
+    Name = "management_subnet"
+    project = "vpc_ec2_instance_docker"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_route_table" "rtb_public" {
     }
   tags = {
     Name = "docker-routing"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 
@@ -82,7 +82,7 @@ resource "aws_security_group" "allow_web" {
 
   tags = {
     Name = "allow_web"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 
@@ -102,6 +102,55 @@ resource "aws_security_group" "allow_ssh" {
 
   tags = {
     Name = "allow_ssh"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
+  }
+}
+
+
+### Endpoint verso registry docker ECR e bucket S3
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.${var.aws_region}.s3"
+
+  tags = {
+    Name = "endpoint_s3"
+    project = "vpc_ec2_instance_docker"
+  }
+}
+
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.${var.aws_region}.ecr.dkr"
+  vpc_endpoint_type = "Interface"
+  subnet_ids = [
+    aws_subnet.management.id
+  ]
+
+  security_group_ids = [
+    aws_security_group.allow_web.id,
+  ]
+  private_dns_enabled = true
+  tags = {
+    Name = "endpoint_ecr_dkr"
+    project = "vpc_ec2_instance_docker"
+  }
+}
+
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = "com.amazonaws.${var.aws_region}.ecr.api"
+  vpc_endpoint_type = "Interface"
+  subnet_ids = [
+    aws_subnet.management.id
+  ]
+
+  security_group_ids = [
+    aws_security_group.allow_web.id,
+  ]
+  private_dns_enabled = true
+  tags = {
+    Name = "endpoint_ecr_api"
+    project = "vpc_ec2_instance_docker"
   }
 }

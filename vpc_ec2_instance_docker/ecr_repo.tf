@@ -6,7 +6,7 @@
 #   customer_master_key_spec      = "SYMMETRIC_DEFAULT"
 #   tags = {
 #     Name        = "Key for ECS repository"
-#     project = "ecs_ecr_container_run"
+#     project = "vpc_ec2_instance_docker"
 #   }
 # }
 
@@ -24,26 +24,8 @@ resource "aws_ecr_repository" "mikesac" {
 #     kms_key           = aws_kms_key.docker_crypt_key.arn 
 #   }
   
-
   tags = {
     Name        = "Test docker repository"
-    project = "ecs_ecr_container_run"
-  }
-}
-
-resource "aws_iam_role" "docker_role" {
-  name = "ecr_access"
-  assume_role_policy = file("role.json")
-
-  inline_policy {
-    name = "ecr_access"
-    policy = templatefile("ecr_policy.json",
-      { 
-        repo_acr= aws_ecr_repository.mikesac.arn
-      }
-    )
-  }
-  tags = {
-    project = "ecs_ecr_container_run"
+    project = "vpc_ec2_instance_docker"
   }
 }

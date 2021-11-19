@@ -1,20 +1,3 @@
-#CentOs Wordpress
-data "aws_ami" "wordpress" {
-  most_recent = true
-  
-  filter {
-    name   = "image-id"
-    values = ["ami-0747a6dacee58afc0"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["679593333241"] 
-}
-
 #Amazon ECS Image
 data "aws_ami" "docker" {
   most_recent = true
@@ -32,8 +15,6 @@ data "aws_ami" "docker" {
   owners = ["amazon"] 
 }
 
-
-
 resource "aws_instance" "web" {
   ami           = data.aws_ami.docker.id
   instance_type = "t2.micro"
@@ -46,19 +27,19 @@ resource "aws_instance" "web" {
   }
 
   tags = {
-    Name = "Test instance"
-    project = "vpc_ec2_instance"
+    Name = "Docker instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 #### internal IP configuration
 
 resource "aws_network_interface" "web-ani" {
   subnet_id   = aws_subnet.management.id
-  private_ips = ["10.3.1.100"]
+  private_ips = ["10.3.2.100"]
 
   tags = {
     Name = "primary_network_interface"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 #### elastic IP configuration
@@ -66,7 +47,7 @@ resource "aws_eip" "web-eip" {
   vpc = true
 
   instance                  = aws_instance.web.id
-  associate_with_private_ip = "10.3.1.100"
+  associate_with_private_ip = "10.3.2.100"
   depends_on                = [aws_internet_gateway.gw]
 }
 
@@ -78,7 +59,7 @@ resource "aws_ebs_volume" "data" {
 
   tags = {
     Name = "Additional disk"
-    project = "vpc_ec2_instance"
+    project = "vpc_ec2_instance_docker"
   }
 }
 
