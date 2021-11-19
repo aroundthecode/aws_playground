@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "vmimport" {
-  bucket = "mikesac-vmimport"
+  bucket = "playground-vmimport"
   acl    = "private"
 
   tags = {

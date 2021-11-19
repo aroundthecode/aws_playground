@@ -32,7 +32,7 @@ aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-doc
 # s3 image presign
 
 ```
-aws s3 presign s3://mikesac-import/aws.ova
+aws s3 presign s3://playground-import/aws.ova
 ```
 
 

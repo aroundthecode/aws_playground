@@ -2,6 +2,6 @@
   {
     "Description": "Fl Import test",
     "Format": "ova",
-    "Url": "s3://mikesac-import/aws.ova"
+    "Url": "s3://playground-import/aws.ova"
   }
 ]

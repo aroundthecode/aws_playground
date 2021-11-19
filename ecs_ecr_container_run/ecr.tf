@@ -12,8 +12,8 @@
 
 
 
-resource "aws_ecr_repository" "mikesac" {
-  name                 = "mikesac"
+resource "aws_ecr_repository" "playground" {
+  name                 = "playground"
   image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {
@@ -39,7 +39,7 @@ resource "aws_iam_role" "docker_role" {
     name = "ecr_access"
     policy = templatefile("ecr_policy.json",
       { 
-        repo_acr= aws_ecr_repository.mikesac.arn
+        repo_acr= aws_ecr_repository.playground.arn
       }
     )
   }

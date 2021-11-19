@@ -12,8 +12,8 @@
 
 
 
-resource "aws_ecr_repository" "mikesac" {
-  name                 = "mikesac"
+resource "aws_ecr_repository" "playground" {
+  name                 = "playground"
   image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {
