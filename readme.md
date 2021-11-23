@@ -43,6 +43,10 @@ make PROJECT=vm_import destoy
 
 # Available projects
 
+## lambda_api_gw
+
+Creates an HelloWord lambra function and exposes it via Api Gateway
+
 ## vm_import
 
 Creates a S3 backed with proper roles to be used to import AMI images from OVA Templates
