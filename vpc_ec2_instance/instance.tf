@@ -35,7 +35,7 @@ data "aws_ami" "docker" {
 
 
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.docker.id
+  ami           = data.aws_ami.wordpress.id
   instance_type = "t2.micro"
 
   key_name      = data.aws_key_pair.deploy.key_name
