@@ -43,6 +43,16 @@ make PROJECT=vm_import destoy
 
 # Available projects
 
+
+## vpc_ha
+
+Creates a VPC with a public and a private subnet for each abailability zone.
+Creates an autoscaling group to maintain a single worpress insance available across the 3 availability zones
+Creates an Elastic Ip and uses a Livecycle hook with a python lambta to keep it attached to the running instance upon scaling events.
+
+## elasting_running_worpress/
+Retrieve current running wodpress insance and "manually" attach elastic IP to it
+
 ## lambda_api_gw
 
 Creates an HelloWord lambra function and exposes it via Api Gateway
