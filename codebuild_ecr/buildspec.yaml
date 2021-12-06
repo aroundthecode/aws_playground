@@ -1,0 +1,31 @@
+version: 0.2
+
+env:
+  variables:
+    M2_HOME: "/opt/maven"
+phases:
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      
+  install:
+    runtime-versions:
+      java: corretto8
+      
+  build:
+    commands:
+       - java -version
+       - mvn --version
+       - mvn clean install package -U
+       - mvn -f pathfinder-server/pom.xml dockerfile:build
+       - AWS_ACCOUNT_ID=$(echo ${CODEBUILD_BUILD_ARN} | cut -f5 -d":")
+       - echo AWS_ACCOUNT_ID ${AWS_ACCOUNT_ID}
+       - docker tag aroundthecode/pathfinder-server:0.1.0-SNAPSHOT ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/pathfinder:latest
+  
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - AWS_ACCOUNT_ID=$(echo ${CODEBUILD_BUILD_ARN} | cut -f5 -d":")
+      - docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/pathfinder:latest    
