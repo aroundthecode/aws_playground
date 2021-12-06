@@ -46,11 +46,11 @@ make PROJECT=vm_import destoy
 
 ## vpc_ha
 
-Creates a VPC with a public and a private subnet for each abailability zone.
-Creates an autoscaling group to maintain a single worpress insance available across the 3 availability zones
-Creates an Elastic Ip and uses a Livecycle hook with a python lambta to keep it attached to the running instance upon scaling events.
+* Creates a VPC with a public and a private subnet for each abailability zone.
+* Creates an autoscaling group to maintain a single worpress insance available across the 3 availability zones
+* Creates an Elastic Ip and uses a Livecycle hook with a python lambta to keep it attached to the running instance upon scaling events.
 
-## elasting_running_worpress/
+## elasting_running_worpress
 Retrieve current running wodpress insance and "manually" attach elastic IP to it
 
 ## lambda_api_gw
@@ -66,5 +66,5 @@ Creates a private VPC with a Wordpress VM inside, configures http/https and ssh 
 
 ## vpc_ec2_instance_docker
 
-Creates a private VPC with a Docker-ready VM inside, configures http/https and ssh access.
-Creates a ECR Docker regisry and setup endpoints to be reachable from internal docker to pull images and execute on the VM
+* Creates a private VPC with a Docker-ready VM inside, configures http/https and ssh access.
+* Creates a ECR Docker regisry and setup endpoints to be reachable from internal docker to pull images and execute on the VM
