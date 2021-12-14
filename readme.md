@@ -43,6 +43,15 @@ make PROJECT=vm_import destoy
 
 # Available projects
 
+## eks
+Full Kubernetes Eks cluster with both fargate and a single node ec2 instance.
+
+Apply will also produce kubecondif file to be used to connect to the cluster.
+
+**WARNING!**
+```
+⚠️⚠️⚠️ EKS cluster costs are outside AWS free plan! ⚠️⚠️⚠️
+```
 
 ## vpc_ha
 
