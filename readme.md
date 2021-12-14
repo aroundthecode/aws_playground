@@ -35,7 +35,7 @@ make PROJECT=vm_import apply
 
 ## Destroy terraform resources
 
-WARNING: no deatroy confimration will be preompt!
+WARNING: no destroy confimration will be preompt!
 
 ```
 make PROJECT=vm_import destoy
@@ -50,7 +50,7 @@ Apply will also produce kubecondif file to be used to connect to the cluster.
 
 **WARNING!**
 ```
-:warning: :warning: :warning: EKS cluster costs are outside AWS free plan! :warning: :warning: :warning:
+⚠️⚠️⚠️ EKS cluster costs are outside AWS free plan! ⚠️⚠️⚠️
 ```
 
 ## vpc_ha
