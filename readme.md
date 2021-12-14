@@ -50,7 +50,7 @@ Apply will also produce kubecondif file to be used to connect to the cluster.
 
 **WARNING!**
 ```
-⚠️⚠️⚠️ EKS cluster costs are outside AWS free plan! ⚠️⚠️⚠️
+:warning: :warning: :warning: EKS cluster costs are outside AWS free plan! :warning: :warning: :warning:
 ```
 
 ## vpc_ha
