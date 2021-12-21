@@ -21,24 +21,3 @@ output "kubeconfig_token" {
 }
 
 
-data "aws_eks_cluster_auth" "cluster_auth" {
-  name = aws_eks_cluster.eks_cluster.name
-}
-
-provider "kubernetes" {
-  host                   = aws_eks_cluster.eks_cluster.endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.eks_cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster_auth.token
-  load_config_file       = false
-}
-
-resource "local_file" "kubectl" {
-    content     = templatefile("kubeconfig.tpl", 
-        {
-            cad = aws_eks_cluster.eks_cluster.certificate_authority[0].data
-            endpoint = aws_eks_cluster.eks_cluster.endpoint
-            name = aws_eks_cluster.eks_cluster.name
-            token = data.aws_eks_cluster_auth.cluster_auth.token
-        } )
-    filename = "kubeconfig.yaml"
-}

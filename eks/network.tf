@@ -61,9 +61,27 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
+#Elastic Ip for NAT Gw (for each zone)
+resource "aws_eip" "nat" {
+  for_each = toset(data.aws_availability_zones.available.names)
+  vpc              = true
+  public_ipv4_pool = "amazon"
+  tags = {
+    Name = "internet_gw_${each.value}"
+    project = "eks"
+  }
+}
+
+# Nat gateway (for each zone)
+resource "aws_nat_gateway" "gw" {
+  for_each = toset(data.aws_availability_zones.available.names)
+  allocation_id = aws_eip.nat[each.value].id
+  subnet_id      = aws_subnet.public[each.value].id
+}
+
 # Routing table to route traffic to internet GW
 resource "aws_route_table" "rtb_public" {
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = aws_vpc.main.id
     route {
         cidr_block = "0.0.0.0/0"
         gateway_id = "${aws_internet_gateway.gw.id}"
@@ -74,11 +92,28 @@ resource "aws_route_table" "rtb_public" {
   }
 }
 
+# Routing table to route traffic to NAT GW
+resource "aws_route_table" "rtb_private" {
+  for_each = toset(data.aws_availability_zones.available.names)
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block = aws_subnet.private[each.value].cidr_block
+    gateway_id = aws_nat_gateway.gw[each.value].id
+  }
+}
+
 # Associate routing rule to public IPS
 resource "aws_route_table_association" "public_route_association" {
   for_each = toset(data.aws_availability_zones.available.names)
   subnet_id      = aws_subnet.public[each.value].id
   route_table_id = aws_route_table.rtb_public.id
+}
+
+# Associate routing rule to private IPS
+resource "aws_route_table_association" "private_route_association" {
+  for_each = toset(data.aws_availability_zones.available.names)
+  subnet_id      = aws_subnet.private[each.value].id
+  route_table_id = aws_route_table.rtb_private[each.value].id
 }
 
 # aperture per HTTP e HTTPS in ingresso e qualsiasi cosa in uscita
