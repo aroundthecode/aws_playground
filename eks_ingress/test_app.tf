@@ -9,6 +9,8 @@ resource "kubernetes_namespace" "fargate" {
     }
     name = var.fargate_namespace
   }
+
+  depends_on = [ helm_release.alb-ingress-controller ]
 }
 
 resource "kubernetes_deployment" "app" {
