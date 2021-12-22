@@ -59,12 +59,11 @@ resource "kubernetes_service" "network-load-balancer" {
   metadata {
     name      = "nginx-service"
     namespace = var.fargate_namespace
-    annotations = {
-      #service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
-      "service.beta.kubernetes.io/aws-load-balancer-type": "external"
-      "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type": "ip"
-      
-    }
+    #annotations = {
+    #  "service.beta.kubernetes.io/aws-load-balancer-type": "external"
+    #  "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type": "ip"
+    #  
+    #}
   }
   spec {
     selector = {
@@ -77,7 +76,7 @@ resource "kubernetes_service" "network-load-balancer" {
       protocol    = "TCP"
     }
 
-    type = "LoadBalancer"
+    type = "ClusterIP"
   }
 
   depends_on = [kubernetes_deployment.app]
